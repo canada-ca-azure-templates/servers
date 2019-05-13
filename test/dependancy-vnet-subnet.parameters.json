@@ -6,6 +6,7 @@
             "value": [
                 {
                     "name": "PwS2-validate-servers-1-VNET",
+                    "resourceGroup": "PwS2-validate-servers-1-RG",
                     "addressPrefixes": [
                         "10.96.96.0/24"
                     ],

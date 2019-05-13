@@ -22,7 +22,8 @@ function Output-DeploymentName {
 }
 $devBaseTemplateUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/arm"
 $prodBaseTemplateUrl = "https://$storageAccountName.blob.core.windows.net/$prodContainerName/arm"
-$gcLibraryUrl = "https://azpwsdeployment.blob.core.windows.net/library/arm"
+$gcLibraryUrl = "https://raw.githubusercontent.com/canada-ca/Templates/arm"
+$serversDevURL = "https://raw.githubusercontent.com/canada-ca-arm/servers/dev/azuredeploy.json"
 
 #******************************************************************************
 # Script body
@@ -31,12 +32,6 @@ $gcLibraryUrl = "https://azpwsdeployment.blob.core.windows.net/library/arm"
 
 # Cleanup old jobs
 Get-Job | Remove-Job
-
-#Set-AzureRmCurrentStorageAccount -ResourceGroupName $storageRG -Name $storageAccountName
-    
-#Create the SaS token for the dev contrainer
-#$devToken = New-AzureStorageContainerSASToken -Name $containerName -Permission r -ExpiryTime (Get-Date).AddMinutes(30.0)
-#$prodToken = New-AzureStorageContainerSASToken -Name $prodContainerName -Permission r -ExpiryTime (Get-Date).AddMinutes(30.0)
 
 # Start the deployment
 Write-Host "Starting deployment...";
@@ -60,7 +55,7 @@ if (Get-Job -State Failed) {
 Get-Job | Remove-Job
 
 # Validating server template
-New-AzureRmResourceGroupDeployment -ResourceGroupName PwS2-validate-servers-1-RG -Name "validate-$templateLibraryName-Build-$templateLibraryName" -TemplateUri "$devBaseTemplateUrl/servers/$templateLibraryVersion/azuredeploy.json" -TemplateParameterFile (Resolve-Path "$PSScriptRoot\validate-servers.parameters.json") -Verbose
+New-AzureRmResourceGroupDeployment -ResourceGroupName PwS2-validate-servers-1-RG -Name "validate-$templateLibraryName-Build-$templateLibraryName" -TemplateUri $serversDevURL -TemplateParameterFile (Resolve-Path "$PSScriptRoot\validate-servers.parameters.json") -Verbose
 
 $provisionningState = (Get-AzureRmResourceGroupDeployment -ResourceGroupName PwS2-validate-servers-1-RG -Name "validate-$templateLibraryName-Build-$templateLibraryName").ProvisioningState
 

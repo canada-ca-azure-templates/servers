@@ -40,7 +40,7 @@
                 {
                     "name": "availavilityset",
                     "location": "canadacentral",
-                    "templateLink": "https://raw.githubusercontent.com/canada-ca/accelerators_accelerateurs-azure/master/Templates/arm/availabilityset/20190302.2/azuredeploysub.json",
+                    "templateLink": "https://raw.githubusercontent.com/canada-ca/accelerators_accelerateurs-azure/master/Templates/arm/availabilityset/20190501.1/azuredeploysub.json",
                     "parametersFile": "https://raw.githubusercontent.com/canada-ca-arm/servers/dev/test/dependancy-availabilityset.parameters.json",
                     "dependsOn": [
                         "resourcegroups"

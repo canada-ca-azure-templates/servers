@@ -1,0 +1,23 @@
+trigger:
+- master
+
+steps:
+- task: AzureFileCopy@2
+  displayName: 'Copy template update to sandbox Azure blob storage $(storageSandbox)/$(ContainerName)'
+  inputs:
+    SourcePath: template
+    azureSubscription: '$(azureSubscriptionSandbox)'
+    Destination: AzureBlob
+    storage: $(storageSandbox)
+    ContainerName: $(ContainerName)
+    BlobPrefix: arm/$(Build.Repository.Name)/$(Build.BuildNumber)
+
+- task: AzureFileCopy@3
+  displayName: 'Update latest folder in $(storageSandbox)/$(ContainerName)'
+  inputs:
+    SourcePath: template
+    azureSubscription: '$(azureSubscriptionSandbox)'
+    Destination: AzureBlob
+    storage: $(storageSandbox)
+    ContainerName: $(ContainerName)
+    BlobPrefix: arm/$(Build.Repository.Name)/latest

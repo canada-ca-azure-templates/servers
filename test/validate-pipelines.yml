@@ -1,0 +1,38 @@
+trigger:
+- dev
+
+steps:
+- task: AzureFileCopy@2
+  displayName: 'Copy to validation library'
+  inputs:
+    SourcePath: template
+    azureSubscription: '$(azureSubscriptionValidation)'
+    Destination: AzureBlob
+    storage: $(storageValidation)
+    ContainerName: $(containerName)
+    BlobPrefix: 'arm/$(Build.Repository.Name)/$(Build.BuildNumber)'
+
+- task: AzurePowerShell@3
+  displayName: 'Azure PowerShell script: FilePath'
+  inputs:
+    azureSubscription: '$(azureSubscriptionValidation)'
+    ScriptPath: test/validate.ps1
+    ScriptArguments: '-templateLibraryName $(Build.Repository.Name) -templateLibraryVersion $(Build.BuildNumber) -containerName $(containerName) -storageRG $(storageRG) -storageAccountName $(storageValidation)'
+    azurePowerShellVersion: LatestVersion
+
+- task: AzureFileCopy@2
+  displayName: 'Copy to sandbox library'
+  inputs:
+    SourcePath: template
+    azureSubscription: '$(azureSubscriptionSandbox)'
+    Destination: AzureBlob
+    storage: $(storageSandbox)
+    ContainerName: $(containerName)
+    BlobPrefix: 'arm/$(Build.Repository.Name)/$(Build.BuildNumber)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: $(Build.Repository.Name)'
+  inputs:
+    PathtoPublish: template
+    ArtifactName: '$(Build.Repository.Name)'
+  enabled: false

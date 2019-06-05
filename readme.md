@@ -12,11 +12,11 @@ The following security controls can be met through configuration of this templat
 
 ## Dependancies
 
-* [Resource Groups](https://github.com/canada-ca/accelerators_accelerateurs-azure/blob/master/Templates/arm/resourcegroups/latest/readme.md)
-* [Keyvault](https://github.com/canada-ca/accelerators_accelerateurs-azure/blob/master/Templates/arm/keyvaults/latest/readme.md)
-* [VNET-Subnet](https://github.com/canada-ca/accelerators_accelerateurs-azure/blob/master/Templates/arm/vnet-subnet/latest/readme.md)
-* [AvailabilitySet]
-* [StorageAccount]
+* [Resource Groups](https://github.com/canada-ca-azure-templates/resourcegroups/blob/master/readme.md)
+* [Keyvault](https://github.com/canada-ca-azure-templates/keyvaults/blob/master/readme.md)
+* [VNET-Subnet](https://github.com/canada-ca-azure-templates/vnet-subnet/blob/master/readme.md)
+* [AvailabilitySet](https://github.com/canada-ca-azure-templates/availabilityset/blob/master/readme.md)
+* [StorageAccount](https://github.com/canada-ca-azure-templates/storageaccount/blob/master/readme.md)
 
 ## Parameter format
 
@@ -49,6 +49,11 @@ The following security controls can be met through configuration of this templat
                         },
                         "vmSize": "Standard_B1s",
                         "bootDiagnostic": true,
+                        "backupConfig": {
+                            "existingBackupVaultRG": "PwS3-GCPS-Sharepoint-RG",
+                            "existingBackupVaultName": "PwS3-GCPS-Sharepoint-Backup-Vault",
+                            "existingBackupPolicy": "DailyBackupPolicy"
+                        },
                         "existingBackupVaultRG": "nothing",
                         "storageProfile": {
                             "osDisk": {
@@ -252,7 +257,7 @@ This is helpfull to ensure there will be no keyvault duplicates in Azure as it n
 | antimalwareInfo           | object  | No       | Object containing windows antimalware configuration - [Windows Antimalware Config Object](#windows-antimalware-config-object)                                                                                                                                                                                                                                                                                                                                      |
 | applicationSecurityGroups | array   | No       | Array of application security groups objects that contain references to ApplicationSecurityGroup. - [Application Security Groups Config Object](#applicationsecuritygroup-object)                                                                                                                                                                                                                                                                                  |
 | availabilitySetName       | string  | No       | Name of the availabilitySet resource for the VM                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| backupConfig              | object  | No       | Object containing VM Backup configuration - [Backup Config]                                                                                                                                                                                                                                                                                                                                                                                                        |
+| backupConfig              | object  | No       | Object containing VM Backup configuration - [Backup Config](#backup-config-object)                                                                                                                                                                                                                                                                                                                                                                                                        |
 | bootDiagnostic            | boolean | Yes      | Whether boot diagnostics should be enabled on the Virtual Machine.                                                                                                                                                                                                                                                                                                                                                                                                 |
 | computerName              | string  | Yes      | Name of the VM                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | DSCSettings               |

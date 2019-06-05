@@ -5,45 +5,45 @@
         "deploymentSubArray": {
             "value": [
                 {
-                    "name": "resourcegroups",
+                    "name": "resourcegroups-servers",
                     "location": "canadacentral",
                     "templateLink": "https://raw.githubusercontent.com/canada-ca-azure-templates/resourcegroups/20190514/template/azuredeploysub.json",
                     "parametersFile": "dependancy-resourcegroups-canadacentral.parameters.json"
                 },
                 {
-                    "name": "keyvault-infra",
+                    "name": "keyvault-infra-servers",
                     "location": "canadacentral",
                     "templateLink": "https://raw.githubusercontent.com/canada-ca-azure-templates/keyvaults/20190514/template/azuredeploysub.json",
                     "parametersFile": "dependancy-keyvaults.parameters.json",
                     "dependsOn": [
-                        "resourcegroups"
+                        "resourcegroups-servers"
                     ]
                 },
                 {
-                    "name": "vnet-subnet",
+                    "name": "vnet-subnet-servers",
                     "location": "canadacentral",
                     "templateLink": "https://raw.githubusercontent.com/canada-ca-azure-templates/vnet-subnet/20190516/template/azuredeploysub.json",
                     "parametersFile": "dependancy-vnet-subnet.parameters.json",
                     "dependsOn": [
-                        "resourcegroups"
+                        "resourcegroups-servers"
                     ]
                 },
                 {
-                    "name": "storage",
+                    "name": "storage-servers",
                     "location": "canadacentral",
                     "templateLink": "https://raw.githubusercontent.com/canada-ca-azure-templates/storage/20190430/template/azuredeploysub.json",
                     "parametersFile": "dependancy-storage.parameters.json",
                     "dependsOn": [
-                        "resourcegroups"
+                        "resourcegroups-servers"
                     ]
                 },
                 {
-                    "name": "availavilityset",
+                    "name": "availavilityset-servers",
                     "location": "canadacentral",
                     "templateLink": "https://raw.githubusercontent.com/canada-ca-azure-templates/availabilityset/20190506/template/azuredeploysub.json",
                     "parametersFile": "dependancy-availabilityset.parameters.json",
                     "dependsOn": [
-                        "resourcegroups"
+                        "resourcegroups-servers"
                     ]
                 }
             ]

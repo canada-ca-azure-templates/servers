@@ -1,7 +1,7 @@
 Param(
     [Parameter(Mandatory = $false)][string]$templateLibraryName = (Split-Path (Resolve-Path "$PSScriptRoot\..") -Leaf),
     [string]$Location = "canadacentral",
-    [string]$subscription = "",
+    [string]$subscription = "2de839a0-37f9-4163-a32a-e1bdb8d6eb7e",
     [switch]$devopsCICD = $false,
     [switch]$doNotCleanup = $false,
     [switch]$doNotDeployPreReq = $false

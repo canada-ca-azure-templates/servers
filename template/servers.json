@@ -471,6 +471,24 @@
             }
         },
         {
+            "condition": "[contains(parameters('vmObject').vm,'customScript')]",
+            "name": "[concat(parameters('vmObject').vm.computerName,'/customScript')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2018-06-01",
+            "dependsOn": [
+                "[concat('Deploy-', parameters('vmObject').vm.computerName)]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.9",
+                "autoUpgradeMinorVersion": true,
+                "settings": "[if(contains(parameters('vmObject').vm.customScript, 'settings'), parameters('vmObject').vm.customScript.settings, json('null'))]",
+                "protectedSettings": "[if(contains(parameters('vmObject').vm.customScript, 'protectedSettings'), parameters('vmObject').vm.customScript.protectedSettings, json('null'))]"
+            }
+        },
+        {
             "condition": "[contains(parameters('vmObject').vm,'encryptDisks')]",
             "type": "Microsoft.Resources/deployments",
             "name": "[concat('EncryptWindows-', parameters('vmObject').vm.computerName)]",
